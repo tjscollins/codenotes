@@ -1,13 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import { Row, Column } from '../components/Grid';
 import ToContents from '../components/TableOfContents';
+import theme from '../styles/theme';
+
 import './index.css';
 
-const TemplateWrapper = styled(({ children, data }) => (
+
+const TemplateWrapper = ({ children, data }) => (
   <div>
     <Helmet
       title = {data.site.siteMetadata.title}
@@ -16,23 +19,36 @@ const TemplateWrapper = styled(({ children, data }) => (
         { name: 'keywords', content: 'sample, something' },
       ]}
     />
-    <FlexContainer>
-      <ToContents pages={data.allMarkdownRemark.edges}/>
-      <Article>
-        {children()}
-      </Article>
-    </FlexContainer>
+    <ThemeProvider theme={theme}>
+      <div>
+        <HeaderBar />
+        <FlexContainer>
+          <ToContents 
+            pages={data.allMarkdownRemark.edges}
+            title={data.site.siteMetadata.title} />
+          <div>
+            <Main>
+              {children()}
+            </Main>
+          </div>
+        </FlexContainer>
+      </div>
+    </ThemeProvider>
   </div>
-))`
-  display: flex;
-  flex-direction: row;
-`
+);
 
 TemplateWrapper.propTypes = {
   children: PropTypes.func,
 }
 
 export default TemplateWrapper
+
+const HeaderBar = styled.div`
+  padding-left: 360px;
+  width: 100%;
+  height: 35px;
+  background-color: ${props => props.theme.sidebar.backgroundColor}
+`;
 
 const FlexContainer = styled.div`
   display: flex;
@@ -44,7 +60,7 @@ const FlexContainer = styled.div`
   }
 `
 
-const Article = styled.div`
+const Main = styled.main`
   margin: 0 auto;
   max-width: 960px;
   padding: 0px 1.1rem 1.45rem;
@@ -64,6 +80,7 @@ export const pageQuery = graphql`
               frontmatter {
                 title
                 chapter
+                date
               }
               fields {
                 slug
