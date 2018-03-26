@@ -53,7 +53,6 @@ class ChapterContents extends React.Component {
                         height: '0px'
                     }}>
                     {contents.map(({ node, display }, ind) => {
-                        console.log('node', node);
                         return (
                             <StyledNote 
                                 key={`${title}${ind}`}
@@ -109,8 +108,16 @@ const StyledChapter = styled.li`
 
 export const StyledNote = styled.li`
     list-style: none;
-    color: ${({ display, theme: { sidebar } }) => 
-        display === MATCH_TYPE.matched ? sidebar.hilight : sidebar.textColor
+    color: ${({ display, theme: { sidebar: { colors } } }) => 
+        display === MATCH_TYPE.matched ? colors.hilight : colors.textColor
     };
     line-height: 1rem;
+
+    &:hover,
+    &:focus, 
+    a:hover,
+    a:focus {
+        color: ${({theme}) => theme.sidebar.colors.focusColor};
+        text-decoration: underline;
+    }
 `;

@@ -1,11 +1,20 @@
 import createTheme from 'styled-components-theme';
 
 const colors = {
-    sidebar: {
+
+}
+
+const sidebar = {
+    colors: {
         backgroundColor: 'hsla(210, 35%, 25%, 1)', // Dark blue gray
         textColor: 'white',
-        hilight: 'hsla(51, 65%, 65%, 1)',          // Light gold
-    }
+        hilight: 'hsla(50, 75%, 65%, 1)',          // Light gold
+        focusColor: 'hsla(50, 50%, 85%, 1)',
+    },
+};
+
+const breakpoints= {
+    mobileLimit: '1120px'
 };
 
 const fonts = {
@@ -22,9 +31,11 @@ const article = {
 };
 
 const theme = {
-    ...colors,
-    ...fonts,
-
+    colors,
+    fonts,
+    breakpoints,
+    
+    sidebar,
     article,
 };
 

@@ -19,7 +19,6 @@ class TOC extends React.Component {
     }
 
     createTableEntries({chapterTitle, list}) {
-        console.log(this.state);
         return (
                 <ChapterContents 
                     key={uuid()}
@@ -57,10 +56,11 @@ class TOC extends React.Component {
         const re = new RegExp(searchText, 'i');
 
         const pages = this.state.pages.map((page) => {
-            const {node: {frontmatter: { title }}} = page;
+            const {node: {frontmatter: { title = '', tags = [] }}} = page;
+            const searchCandidate = `${title} ${tags.join(' ')}`;
             return {
                 ...page,
-                display: re.test(title) ? MATCH_TYPE.matched : MATCH_TYPE.notMatched,
+                display: re.test(searchCandidate) ? MATCH_TYPE.matched : MATCH_TYPE.notMatched,
             };
         }); 
         
@@ -108,7 +108,7 @@ class TOC extends React.Component {
         const { title } = this.props;
 
         return (
-        <TocDiv>
+        <TocDiv id="sidebar">
             <TocTitle>
                 <Link to='/'>
                     {title}
@@ -116,7 +116,7 @@ class TOC extends React.Component {
             </TocTitle>
             <SearchField onSearch={this.search.bind(this)} />
             <TopicsHeader>
-                Recent:
+                Recent Posts:
             </TopicsHeader>
             <ul>
                 {this.getRecentPosts()}
@@ -143,14 +143,21 @@ const TopicsHeader = styled.h2`
 const TocDiv = styled.div`
     width: 360px;
     height: 100vh;
-    background-color: ${({theme}) => theme.sidebar.backgroundColor};
-    color: ${({theme}) => theme.sidebar.textColor};
+    background-color: ${({theme}) => theme.sidebar.colors.backgroundColor};
+    color: ${({theme}) => theme.sidebar.colors.textColor};
     padding: 0px 10px;
 
     a {
         color: inherit;
         text-decoration: inherit;
     }
+
+    @media only screen and (max-width: ${({theme}) => theme.breakpoints.mobileLimit}) {
+        position: fixed;
+        left: -360px;
+    }
+
+
 `;
 
 const TocTitle = styled.h1`
