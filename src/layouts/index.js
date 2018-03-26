@@ -29,7 +29,7 @@ const TemplateWrapper = ({ children, data }) => (
     />
     <Provider store={store}>
         <ThemeProvider theme={theme}>
-            <NavManager>
+            <div>
                 <HeaderBar />
                 <FlexContainer>
                 <ToContents 
@@ -39,7 +39,7 @@ const TemplateWrapper = ({ children, data }) => (
                     {children()}
                 </Main>
                 </FlexContainer>
-            </NavManager>
+            </div>
         </ThemeProvider>
     </Provider>
   </div>

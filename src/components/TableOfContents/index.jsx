@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import ChapterContents, { StyledNote } from './ChapterContents';
 import SearchField from './Search';
+import AboutAuthor from './AboutAuthor';
 
 import { MATCH_TYPE } from '../../constants';
 import { sidebarWidth } from '../../util';
@@ -102,8 +103,7 @@ class TOC extends React.Component {
     
     search(event) {
         event.preventDefault();
-        const { target } = event;
-        this.filterPages(target.value);
+        this.filterPages(event.target.value);
     }
 
     render() {
@@ -112,24 +112,27 @@ class TOC extends React.Component {
         console.log("TOC expanded: " + expanded);
         return (
         <TocDiv id="sidebar" expanded={expanded}>
-            <TocTitle>
-                <Link to='/'>
-                    {title}
-                </Link>
-            </TocTitle>
-            <SearchField onSearch={this.search.bind(this)} />
-            <TopicsHeader>
-                Recent Posts:
-            </TopicsHeader>
-            <ul>
-                {this.getRecentPosts()}
-            </ul>
-            <TopicsHeader>
-                By Topic:
-            </TopicsHeader>
-            <ul>
-                {this.createTableOfContents()}
-            </ul>
+            <div>
+                <TocTitle>
+                    <Link to='/'>
+                        {title}
+                    </Link>
+                </TocTitle>
+                <SearchField onSearch={this.search.bind(this)} />
+                <TopicsHeader>
+                    Recent Posts:
+                </TopicsHeader>
+                <ul>
+                    {this.getRecentPosts()}
+                </ul>
+                <TopicsHeader>
+                    By Topic:
+                </TopicsHeader>
+                <ul>
+                    {this.createTableOfContents()}
+                </ul>
+            </div>
+            <AboutAuthor />
         </TocDiv>
         );
     }
@@ -150,20 +153,24 @@ const TopicsHeader = styled.h2`
 `
 
 const TocDiv = styled.div`
-    width: 360px;
-    position: fixed;
-    left: calc(${sidebarWidth} - 360px);
-    top: 35px;
-    height: 100vh;
     background-color: ${({theme}) => theme.sidebar.colors.backgroundColor};
     color: ${({theme}) => theme.sidebar.colors.textColor};
-    padding: 0px 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+    left: calc(${sidebarWidth} - 360px);
+    padding: 35px 10px 0px;
+    position: fixed;
+    top: 0px;
     transition: left ${({theme}) => theme.sidebar.hideTransition};
+    width: 360px;
     z-index: 10000;
 
     a {
         color: inherit;
         text-decoration: inherit;
+        &:hover, &:focus { transition: color 0.5s ease; }
     }
 `;
 
