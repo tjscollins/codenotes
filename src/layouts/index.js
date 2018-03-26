@@ -2,6 +2,11 @@ import Helmet from 'react-helmet'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { ThemeProvider } from 'styled-components';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+import reducer from "../redux/reducers";
+
 
 import HeaderBar from '../components/HeaderBar';
 import NavManager from '../components/NavManager';
@@ -10,6 +15,8 @@ import ToContents from '../components/TableOfContents';
 import theme from '../styles/theme';
 
 import './index.css';
+
+let store = createStore(reducer);
 
 const TemplateWrapper = ({ children, data }) => (
   <div>
@@ -20,19 +27,21 @@ const TemplateWrapper = ({ children, data }) => (
         { name: 'keywords', content: 'sample, something' },
       ]}
     />
-    <ThemeProvider theme={theme}>
-      <NavManager>
-        <HeaderBar />
-        <FlexContainer>
-          <ToContents 
-            pages={data.allMarkdownRemark.edges}
-            title={data.site.siteMetadata.title} />
-          <Main>
-            {children()}
-          </Main>
-        </FlexContainer>
-      </NavManager>
-    </ThemeProvider>
+    <Provider store={store}>
+        <ThemeProvider theme={theme}>
+            <NavManager>
+                <HeaderBar />
+                <FlexContainer>
+                <ToContents 
+                    pages={data.allMarkdownRemark.edges}
+                    title={data.site.siteMetadata.title} />
+                <Main>
+                    {children()}
+                </Main>
+                </FlexContainer>
+            </NavManager>
+        </ThemeProvider>
+    </Provider>
   </div>
 );
 

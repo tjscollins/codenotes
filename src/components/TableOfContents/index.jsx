@@ -2,19 +2,22 @@ import React from 'react';
 import Link from 'gatsby-link';
 import uuid from 'uuid/v4';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import ChapterContents, { StyledNote } from './ChapterContents';
 import SearchField from './Search';
 
 import { MATCH_TYPE } from '../../constants';
+import { sidebarWidth } from '../../util';
 
 class TOC extends React.Component {
     constructor(props) {
         super(props);
-        const { pages } = props;
+        const { pages, theme } = props;
         this.state = {
             pages: pages.map((page) => ({ display: MATCH_TYPE.noSearchText, ...page })),
             search: false,
+            theme,
         };
     }
 
@@ -105,10 +108,10 @@ class TOC extends React.Component {
 
     render() {
         const { pages } = this.state;
-        const { title } = this.props;
-
+        const { title, expanded } = this.props;
+        console.log("TOC expanded: " + expanded);
         return (
-        <TocDiv id="sidebar">
+        <TocDiv id="sidebar" expanded={expanded}>
             <TocTitle>
                 <Link to='/'>
                     {title}
@@ -132,7 +135,13 @@ class TOC extends React.Component {
     }
 }
 
-export default TOC;
+const mapStateToProps = state => ({expanded: state.sidebarExpanded});
+const mapDispatchToProps = dispatch => ({
+    collapse: () => dispatch(toggleSideBar()),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TOC);
 
 const TopicsHeader = styled.h2`
     font-size: 1rem;
@@ -142,22 +151,20 @@ const TopicsHeader = styled.h2`
 
 const TocDiv = styled.div`
     width: 360px;
+    position: fixed;
+    left: calc(${sidebarWidth} - 360px);
+    top: 35px;
     height: 100vh;
     background-color: ${({theme}) => theme.sidebar.colors.backgroundColor};
     color: ${({theme}) => theme.sidebar.colors.textColor};
     padding: 0px 10px;
+    transition: left ${({theme}) => theme.sidebar.hideTransition};
+    z-index: 10000;
 
     a {
         color: inherit;
         text-decoration: inherit;
     }
-
-    @media only screen and (max-width: ${({theme}) => theme.breakpoints.mobileLimit}) {
-        position: fixed;
-        left: -360px;
-    }
-
-
 `;
 
 const TocTitle = styled.h1`

@@ -11,6 +11,11 @@ const sidebar = {
         hilight: 'hsla(50, 75%, 65%, 1)',          // Light gold
         focusColor: 'hsla(50, 50%, 85%, 1)',
     },
+    width: {
+        expanded: '360px',
+        hidden: '10px',
+    },
+    hideTransition: '0.75s ease-in-out',
 };
 
 const breakpoints= {
