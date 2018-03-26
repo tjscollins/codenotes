@@ -1,15 +1,24 @@
 import React from "react";
 import styled from 'styled-components';
 
-export default ({ data }) => {
-  const post = data.markdownRemark;
-  return (
-    <Article>
-      <h1>{post.frontmatter.title}</h1>
-      <Body dangerouslySetInnerHTML={{ __html: post.html }} />
-    </Article>
-  );
-};
+class codenotesPost extends React.Component {
+    render() {
+        const { data } = this.props;
+        const post = data.markdownRemark;
+        setTimeout(
+            () => window.MathJax.Hub.Queue(["Typeset", MathJax.Hub]), 
+            100
+        );
+        return (
+          <Article>
+            <h1>{post.frontmatter.title}</h1>
+            <Body dangerouslySetInnerHTML={{ __html: post.html }} />
+          </Article>
+        );
+    }
+}
+
+export default codenotesPost;
 
 const Article = styled.article`
   margin-top: 15px;
