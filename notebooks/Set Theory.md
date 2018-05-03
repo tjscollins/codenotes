@@ -1,11 +1,3 @@
----
-title: 'Set Theory'
-date: '2018-02-14'
-chapter: 'Mathematics'
-order: 1
-tags: ['set', 'union', 'intersection']
----
-
 
 # Collections of Uniquities
 
