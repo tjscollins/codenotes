@@ -112,27 +112,29 @@ class TOC extends React.Component {
         console.log("TOC expanded: " + expanded);
         return (
         <TocDiv id="sidebar" expanded={expanded}>
-            <div>
-                <TocTitle>
-                    <Link to='/'>
-                        {title}
-                    </Link>
-                </TocTitle>
-                <SearchField onSearch={this.search.bind(this)} />
-                <TopicsHeader>
-                    Recent Posts:
-                </TopicsHeader>
-                <ul>
-                    {this.getRecentPosts()}
-                </ul>
-                <TopicsHeader>
-                    By Topic:
-                </TopicsHeader>
-                <ul>
-                    {this.createTableOfContents()}
-                </ul>
-            </div>
-            <AboutAuthor />
+            <TocTitle>
+                <Link to='/'>
+                    {title}
+                </Link>
+            </TocTitle>
+            <SearchField onSearch={this.search.bind(this)} />
+            <StyledToc>
+                <div>
+                    <TopicsHeader>
+                        Recent Posts:
+                    </TopicsHeader>
+                    <ul>
+                        {this.getRecentPosts()}
+                    </ul>
+                    <TopicsHeader>
+                        By Topic:
+                    </TopicsHeader>
+                    <ul>
+                        {this.createTableOfContents()}
+                    </ul>
+                </div>
+                <AboutAuthor />
+            </StyledToc>
         </TocDiv>
         );
     }
@@ -145,6 +147,15 @@ const mapDispatchToProps = dispatch => ({
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(TOC);
+
+const StyledToc = styled.div`
+    background-color: ${({theme}) => theme.sidebar.colors.tocColor};
+    height: 100%;
+    padding: 0px 10px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
 
 const TopicsHeader = styled.h2`
     font-size: 1rem;
@@ -160,7 +171,7 @@ const TocDiv = styled.div`
     height: 100%;
     justify-content: space-between;
     left: calc(${sidebarWidth} - 360px);
-    padding: 35px 10px 0px;
+    padding: 35px 0px 0px;
     position: fixed;
     top: 0px;
     transition: left ${({theme}) => theme.sidebar.hideTransition};
