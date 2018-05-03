@@ -15,6 +15,7 @@ import ToContents from '../components/TableOfContents';
 import theme from '../styles/theme';
 
 import './index.css';
+import 'prismjs/themes/prism-okaidia.css';
 
 let store = createStore(reducer);
 
@@ -64,6 +65,7 @@ const FlexContainer = styled.div`
 const Main = styled.main`
   margin: 0 auto;
   max-width: 960px;
+  width: 100%;
   padding: 0px 1.1rem 1.45rem;
   padding-top: 0;
 `
