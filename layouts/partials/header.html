@@ -48,59 +48,59 @@
   </head>
   <body class="" data-url="{{ .RelPermalink }}">
     {{ partial "menu.html" . }}
-        <section id="body">
+    <section id="body">
         <div id="overlay"></div>
         <div class="padding highlightable">
-              {{if not .IsHome}}
-              <div>
+                {{if not .IsHome}}
+                <div>
                 <div id="top-bar">
                 {{ if and (or .IsPage .IsSection) .Site.Params.editURL }}
-                  {{ $File := .File }}
-                  {{ $Site := .Site }}
-                  {{with $File.Path }}
-                  <div id="top-github-link">
+                    {{ $File := .File }}
+                    {{ $Site := .Site }}
+                    {{with $File.Path }}
+                    <div id="top-github-link">
                     <a class="github-link" title='{{T "Edit-this-page"}}' href="{{ $Site.Params.editURL }}{{ replace $File.Dir "\\" "/" }}{{ $File.LogicalName }}" target="blank">
-                      <i class="fa fa-code-fork"></i>
-                      <span id="top-github-link-text">{{T "Edit-this-page"}}</span>
+                        <i class="fa fa-code-fork"></i>
+                        <span id="top-github-link-text">{{T "Edit-this-page"}}</span>
                     </a>
-                  </div>
-                  {{ end }}
+                    </div>
+                    {{ end }}
                 {{ end }}
                 {{$toc := (and (not .Params.disableToc) (not .Params.chapter))}}
                 <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
                     <span id="sidebar-toggle-span">
                         <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
-                          <i class="fa fa-bars"></i>
+                            <i class="fa fa-bars"></i>
                         </a>
                     </span>
-                  {{ if $toc }}
-                  <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
-                  {{ end }}
-                  <span class="links">
+                    {{ if $toc }}
+                    <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+                    {{ end }}
+                    <span class="links">
                     {{ template "breadcrumb" dict "page" . "value" .Title }}   
-                  </span>
+                    </span>
                 </div>
                 {{ if $toc }}
                     {{ partial "toc.html" . }}
                 {{ end }}
-              </div>
+                </div>
             </div>
             {{ end }}
 
         {{ if .Params.chapter }}
-          <div id="chapter">
+            <div id="chapter">
         {{ end }}
         <div id="body-inner">
-          {{if and (not .IsHome) (not .Params.chapter) }}
+            {{if and (not .IsHome) (not .Params.chapter) }}
             <h1>{{.Title}}</h1>
-          {{end}}
+            {{end}}
 
         {{define "breadcrumb"}}
-          {{$parent := .page.Parent }}
-          {{ if $parent }}
+            {{$parent := .page.Parent }}
+            {{ if $parent }}
             {{ $value := (printf "<a href='%s'>%s</a> > %s" $parent.URL $parent.Title .value) }}
             {{ template "breadcrumb" dict "page" $parent "value" $value }} 
-          {{else}}
+            {{else}}
             {{.value|safeHTML}}
-          {{end}}
+            {{end}}
         {{end}}

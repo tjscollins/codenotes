@@ -1,5 +1,8 @@
-baseURL = "http://example.org/"
+baseURL = "http://codenotes.io"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Tyler Collins"
 themesDir = "themes"
 theme = "hugo-theme-learn"
+
+[params]
+    themeVariant = "blue"
