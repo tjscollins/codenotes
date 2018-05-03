@@ -8,4 +8,4 @@ tags: ['set', 'union', 'intersection']
 
 ## Set Theory for the Marginally Intelligent
 
-Test 1 2 3 \\(x^2\\)
+Test 1 2 3 $x^2$
