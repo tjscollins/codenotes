@@ -10,6 +10,7 @@ const sidebar = {
         textColor: 'white',
         hilight: 'hsla(50, 75%, 65%, 1)',          // Light gold
         focusColor: 'hsla(50, 50%, 85%, 1)',
+        tocColor: '#272822',
     },
     width: {
         expanded: '360px',
