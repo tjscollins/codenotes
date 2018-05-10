@@ -6,7 +6,8 @@
 
 const path = require(`path`);
 const { createFilePath } = require('gatsby-source-filesystem');
-const crypto = require('crypto');
+const fm = require('./front-matter')
+const fs = require(`fs-extra`)
 
 exports.onCreateNode = async ({ node, getNode, boundActionCreators, loadNodeContent }) => {
   const { createNodeField, createNode, createParentChildLink } = boundActionCreators;
@@ -19,36 +20,13 @@ exports.onCreateNode = async ({ node, getNode, boundActionCreators, loadNodeCont
       value: slug,
     });
   }
-
-//   if (node.extension === 'ipynb') {
-//     if (node.relativeDirectory.match(/^\..+/) ||
-//         node.base.match(/^\..*/)) return;
-//     const content = await loadNodeContent(node);
-//     const data = JSON.parse(content);
-//     const slug = data.metadata.frontmatter.path;
-
-//     const ipynbNode = {
-//         id: `${node.id} >>> ipynb`,
-//         children: [],
-//         parent: node.id,
-//         internal: {
-//             type: 'ipynb',
-//         },
-//         slug,
-//         content,
-//         fileAbsolutePath: node.absolutePath
-//     };
-
-//     ipynbNode.internal.contentDigest = crypto
-//       .createHash('md5')
-//       .update(JSON.stringify(ipynbNode))
-//       .digest('hex')
-
-//     console.log('Notebook: ',ipynbNode);
-//     createNode(ipynbNode)
-//     createParentChildLink({ parent: node, child: ipynbNode })
-//   }
 };
+
+
+exports.onCreatePage = async function({page}) {
+	const {attributes: {layout}} = fm(await fs.readFile(page.component, 'utf8'))
+	page.layout = layout || 'index';
+}
 
 exports.createPages = async({ graphql, boundActionCreators }) => {
     const { createPage } = boundActionCreators
