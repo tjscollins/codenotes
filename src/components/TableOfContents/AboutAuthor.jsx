@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export default (props) => (
     <Container>
-        <a href="https://tjscollins.me">
+        <a href="/about">
             About the Author
         </a>
     </Container>
