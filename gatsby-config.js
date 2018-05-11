@@ -1,6 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'codenotes Blog',
+    description: ''
   },
   plugins: [
     `gatsby-plugin-typescript`,
