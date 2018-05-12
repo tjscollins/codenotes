@@ -3,6 +3,7 @@
   "rules": {
     "linebreak-style": [false],
     "semicolon": false,
-    "no-reference": false
+    "no-reference": false,
+    "no-shadowed-variable": false
   }
 }

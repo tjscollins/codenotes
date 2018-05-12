@@ -1,43 +1,52 @@
+/// <reference path="../typings/global.d.ts" />
+
 import Helmet from 'react-helmet'
-import PropTypes from 'prop-types'
-import React from 'react'
-import styled, { ThemeProvider } from 'styled-components';
+import * as React from 'react'
+import styled, { ThemeProvider, ThemeProps } from 'styled-components';
 import { createStore } from 'redux';
-import { connect, Provider } from 'react-redux';
+import { connect, Provider, Store } from 'react-redux';
 
-import reducer from "../redux/reducers";
-
+import reducer from '../redux/reducers';
 
 import HeaderBar from '../components/HeaderBar';
-import NavManager from '../components/NavManager';
+// import NavManager from '../components/NavManager';
 import ToContents from '../components/TableOfContents';
 
 import theme from '../styles/theme';
+type SiteTheme = typeof theme;
+
 
 import { sidebarWidth } from '../util';
+
+declare interface TemplateProps {
+    data: any
+    theme: SiteTheme
+    children: any
+}
 
 
 import './index.css';
 import 'prismjs/themes/prism-okaidia.css';
 
-let store = createStore(reducer);
+const store: Store<ReduxState> = createStore(reducer);
 
-const TemplateWrapper = ({ children, data }) => (
+const TemplateWrapper: React.SFC<TemplateProps> = ({ children, data }) => (
   <div>
     <Helmet
       title = {data.site.siteMetadata.title}
       meta={[
         { name: 'description', content: 'Sample' },
-        { name: 'keywords', content: 'sample, something' },
+        { name: 'keywords', content: 'sample, something' }
       ]}
     />
     <Provider store={store}>
         <ThemeProvider theme={theme}>
             <div>
                 <HeaderBar />
-                <ToContents 
+                <ToContents
                     pages={data.allMarkdownRemark.edges}
-                    title={data.site.siteMetadata.title} />
+                    title={data.site.siteMetadata.title}
+                />
                 <FlexContainer>
                     <Main>
                         {children()}
@@ -49,13 +58,9 @@ const TemplateWrapper = ({ children, data }) => (
   </div>
 );
 
-TemplateWrapper.propTypes = {
-  children: PropTypes.func,
-}
+export default TemplateWrapper;
 
-export default TemplateWrapper
-
-const connectToStore = connect(state => ({expanded: state.sidebarExpanded}));
+const connectToStore = connect((state: ReduxState) => ({expanded: state.sidebarExpanded}));
 
 const FlexContainer = connectToStore(styled.div`
   display: flex;
@@ -63,9 +68,9 @@ const FlexContainer = connectToStore(styled.div`
   max-width: 1600px;
   padding-left: ${sidebarWidth};
 
-  transition: padding-left ${({theme}) => theme.sidebar.hideTransition};
+  transition: padding-left ${({theme}: ThemeProps<SiteTheme>) => theme.sidebar.hideTransition};
 
-  @media only screen and (max-width: ${({theme}) => theme.breakpoints.mobileLimit}) {
+  @media only screen and (max-width: ${({theme}: ThemeProps<SiteTheme>) => theme.breakpoints.mobileLimit}) {
     display: block;
   }
 `)

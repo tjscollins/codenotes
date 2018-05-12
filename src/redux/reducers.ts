@@ -1,17 +1,18 @@
-import { combineReducers } from 'redux';
-import { toggleSidebar } from './actions';
+/// <reference path="../typings/global.d.ts" />
 
-function sidebarExpanded(state=true, action) {
+import { combineReducers } from 'redux';
+
+function sidebarExpanded(expanded = true, action: ReduxAction) {
     switch (action.type) {
         case 'TOGGLE_SIDEBAR':
-            return !state;
+            return !expanded;
         default:
-            return state;
+            return expanded;
     }
 }
 
-const reducer = combineReducers({
-    sidebarExpanded,
+const reducer = combineReducers<ReduxState>({
+    sidebarExpanded
 });
 
 export default reducer;

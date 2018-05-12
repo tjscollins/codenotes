@@ -1,40 +1,47 @@
+/// <reference path="../typings/global.d.ts" />
+
 import Helmet from 'react-helmet'
-import PropTypes from 'prop-types'
 import * as React from 'react'
 import styled, { ThemeProvider } from 'styled-components';
 import { createStore } from 'redux';
-import { connect, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import reducer from '../redux/reducers';
 
-
-import HeaderBar from '../components/HeaderBar';
-import NavManager from '../components/NavManager';
-import ToContents from '../components/TableOfContents';
+import HeaderBar from '../components/HeaderBar/aboutPage';
 
 import theme from '../styles/theme';
-
-import { sidebarWidth } from '../util';
-
 
 import './index.css';
 import 'prismjs/themes/prism-okaidia.css';
 
 const store = createStore(reducer);
 
-const TemplateWrapper = ({ children, data }) => (
+interface Props {
+    data: {
+        site: {
+            siteMetadata: SiteMetadata
+        }
+        allMarkdownRemark: {
+            edges: MarkdownRemarkEdge[]
+        }
+    }
+    children: any
+}
+
+const TemplateWrapper = ({ children, data }: Props) => (
   <div>
     <Helmet
       title = {data.site.siteMetadata.title}
       meta={[
-        { name: 'description', content: 'Sample' },
-        { name: 'keywords', content: 'sample, something' },
+        { name: 'description', content: data.site.siteMetadata.description },
+        { name: 'keywords', content: data.site.siteMetadata.keywords }
       ]}
     />
     <Provider store={store}>
         <ThemeProvider theme={theme}>
             <div>
-                <HeaderBar />
+                <HeaderBar theme={theme} data={data}/>
                 <FlexContainer>
                     <Main>
                         {children()}
@@ -46,26 +53,18 @@ const TemplateWrapper = ({ children, data }) => (
   </div>
 );
 
-TemplateWrapper.propTypes = {
-  children: PropTypes.func,
-}
-
 export default TemplateWrapper
 
-const connectToStore = connect(state => ({expanded: state.sidebarExpanded}));
-
-const FlexContainer = connectToStore(styled.div`
+const FlexContainer = styled.div`
   display: flex;
   flex-direction: row;
   max-width: 1600px;
-  padding-left: ${sidebarWidth};
-
   transition: padding-left ${({theme}) => theme.sidebar.hideTransition};
 
   @media only screen and (max-width: ${({theme}) => theme.breakpoints.mobileLimit}) {
     display: block;
   }
-`)
+`;
 
 const Main = styled.main`
   margin: 0 auto;
@@ -79,6 +78,10 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        links {
+            github
+            linkedin
+        }
       }
     }
     allMarkdownRemark {

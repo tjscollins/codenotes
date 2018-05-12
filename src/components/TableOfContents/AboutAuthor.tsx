@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 
-export default (props) => (
+const AboutAuthor: React.SFC = () => (
     <Container>
         <a href="/about">
             About the Author
@@ -9,16 +9,18 @@ export default (props) => (
     </Container>
 );
 
+export default AboutAuthor
+
 const Container = styled.div`
     padding: 10px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    
+
     a:hover,
     a:focus {
         color: ${({theme}) => theme.sidebar.colors.focusColor};
         text-decoration: underline;
     }
-`; 
+`;

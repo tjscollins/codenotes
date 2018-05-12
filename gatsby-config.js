@@ -1,7 +1,15 @@
 module.exports = {
   siteMetadata: {
     title: 'codenotes Blog',
-    description: ''
+    description: '',
+    keywords: [
+        'programming',
+        'computer science'
+    ],
+    links: {
+        github: 'https://github.com/tjscollins',
+        linkedin: 'https://linkedin.com/in/tjscollins',
+    }
   },
   plugins: [
     `gatsby-plugin-typescript`,
@@ -14,13 +22,6 @@ module.exports = {
             path: `${__dirname}/content/codenotes/`,
         },
     },
-    // {
-        //     resolve: `gatsby-source-filesystem`,
-        //     options: {
-            //       name: `notebooks`,
-            //       path: `${__dirname}/notebooks/`,
-            //     },
-            //   },
     {
         resolve: `gatsby-transformer-remark`,
         options: {

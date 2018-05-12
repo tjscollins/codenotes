@@ -1,22 +1,30 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import { toggleSideBar } from '../../redux/actions';
-import { sidebarWidth } from '../../util';
 
-class HeaderBar extends React.Component {
+import Bar from './Bar';
 
-    render () {
+interface HeaderProps {
+    collapse: (...args: any[]) => void
+    expanded: boolean
+}
+
+class HeaderBar extends React.Component<HeaderProps> {
+
+    public render () {
         const { collapse, expanded } = this.props;
 
         return (
             <Bar expanded={expanded}>
-                <a role="button"
+                <a
+                    role="button"
                     href="#"
                     aria-controls="#sidebar"
                     aria-expanded={expanded}
-                    onClick={collapse}>
+                    onClick={collapse}
+                >
                     <div style={expanded ? {} : {display: 'none'}}>
                         <Arrow className="fa fa-arrow-left" />
                     </div>
@@ -29,29 +37,14 @@ class HeaderBar extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({expanded: state.sidebarExpanded});
-const mapDispatchToProps = dispatch => ({
-    collapse: () => dispatch(toggleSideBar()),
+const mapStateToProps = (state: ReduxState) => ({expanded: state.sidebarExpanded});
+const mapDispatchToProps = (dispatch: DispatchFn) => ({
+    collapse: () => dispatch(toggleSideBar())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar);
 
-const Bar = styled.div`
-  padding-left: ${sidebarWidth};
-  transition: padding-left ${({theme}) => theme.sidebar.hideTransition};
-  width: 100%;
-  height: 35px;
-  background-color: ${({theme}) => theme.sidebar.colors.backgroundColor};
-  display: flex;
-  flexDirection: row;
-  align-items: center;
-`;
-
 const Arrow = styled.i`
     color: ${props => props.theme.sidebar.colors.textColor};
-`;
-
-const ShowArrow = styled.i`
-color: ${props => props.theme.sidebar.colors.textColor};
 `;
 
