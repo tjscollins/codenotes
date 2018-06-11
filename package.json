@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "author": "Tyler Collins <tjscollins@gmail.com>",
   "dependencies": {
+    "address-format": "0.0.3",
     "fs-extra": "^6.0.1",
     "gatsby": "^1.9.256",
     "gatsby-link": "^1.6.41",
@@ -13,7 +14,7 @@
     "gatsby-plugin-typescript": "^1.4.20",
     "gatsby-remark-prismjs": "^2.0.2",
     "gatsby-source-filesystem": "^1.5.35",
-    "gatsby-transformer-json": "^1.0.17",
+    "gatsby-transformer-json": "^1.0.18",
     "gatsby-transformer-remark": "^1.7.40",
     "js-yaml": "^3.11.0",
     "prismjs": "^1.14.0",

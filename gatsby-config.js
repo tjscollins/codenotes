@@ -23,6 +23,27 @@ module.exports = {
         },
     },
     {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+            name: `portfolio`,
+            path: `${__dirname}/content/portfolio/`,
+        },
+    },
+    {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+            name: `resume`,
+            path: `${__dirname}/content/resume/`,
+        },
+    },
+    {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+            name: `data`,
+            path: `${__dirname}/data/`,
+        },
+    },
+    {
         resolve: `gatsby-transformer-remark`,
         options: {
             plugins: [
