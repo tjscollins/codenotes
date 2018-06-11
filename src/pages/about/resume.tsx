@@ -2,7 +2,7 @@
 @meta
 layout: about
 */
-// const fs = require('fs');
+/// <reference path="../../components/Resume/resume.d.ts" />
 import * as React from 'react'
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
@@ -12,7 +12,7 @@ import RightResumeColumn from '../../components/Resume/RightColumn';
 
 
 class ResumePage extends React.Component {
-    private resumeData: string = require('../../../data/resume.json');
+    private resumeData = require('../../../data/resume.json');
 
     public render() {
         console.log(this.resumeData);
