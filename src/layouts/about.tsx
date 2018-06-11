@@ -84,20 +84,9 @@ export const pageQuery = graphql`
         }
       }
     }
-    allMarkdownRemark {
-      edges {
-          node {
-              frontmatter {
-                title
-                chapter
-                date
-                tags
-              }
-              fields {
-                slug
-              }
-          }
-      }
+    file(name: {eq: "resume"}) {
+        id
+        absolutePath
     }
   }
 `;
