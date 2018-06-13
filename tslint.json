@@ -1,0 +1,9 @@
+{
+  "extends": ["tslint:recommended", "tslint-config-blvd/react"],
+  "rules": {
+    "linebreak-style": [false],
+    "semicolon": false,
+    "no-reference": false,
+    "no-shadowed-variable": false
+  }
+}

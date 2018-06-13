@@ -6,6 +6,12 @@ node_modules
 public/
 .DS_Store
 yarn-error.log
+<<<<<<< HEAD
 .ipynb_checkpoints
 __pycache__
 themes
+=======
+__pycache__/
+themes/
+.pytest_cache
+>>>>>>> gatsby_site
