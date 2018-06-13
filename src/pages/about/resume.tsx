@@ -2,427 +2,398 @@
 @meta
 layout: about
 */
-/// <reference path="../../components/Resume/resume.d.ts" />
 import * as React from 'react'
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
-import LeftResumeColumn from '../../components/Resume/LeftColumn';
-import RightResumeColumn from '../../components/Resume/RightColumn';
-
+import DefaultResume from '@tjscollins/jsonresume-react-components';
 
 class ResumePage extends React.Component {
     private resumeData = require('../../../data/resume.json');
 
     public render() {
-        console.log(this.resumeData);
         return (
             <Div>
                 <Helmet>
-                <title>Tyler Collins Resume</title>
+                    <title>Tyler Collins Resume</title>
+                    <link
+                        href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,600|Josefin+Slab:300,400,600"
+                        rel="stylesheet"
+                    />
                 </Helmet>
-                    <div className="resume-content">
-                        <LeftResumeColumn data={this.resumeData} />
-                        <RightResumeColumn data={this.resumeData} />
-                    </div>
+                <DefaultResume resumeData={this.resumeData} />
             </Div>
         );
     }
 }
 
-export default ResumePage;
-
 const Div = styled.div`
-    @font-face {
-    font-family: 'Josefin Sans';
-    font-style: normal;
-    font-weight: 300;
-    src: local('Josefin Sans Light'), local('JosefinSans-Light'), url(https://fonts.gstatic.com/s/josefinsans/v12/Qw3FZQNVED7rKGKxtqIqX5Ecpl5te10k.ttf) format('truetype');
-    }
-    @font-face {
-    font-family: 'Josefin Sans';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Josefin Sans Regular'), local('JosefinSans-Regular'), url(https://fonts.gstatic.com/s/josefinsans/v12/Qw3aZQNVED7rKGKxtqIqX5EUDXx9.ttf) format('truetype');
-    }
-    @font-face {
-    font-family: 'Josefin Sans';
-    font-style: normal;
-    font-weight: 700;
-    src: local('Josefin Sans Bold'), local('JosefinSans-Bold'), url(https://fonts.gstatic.com/s/josefinsans/v12/Qw3FZQNVED7rKGKxtqIqX5Ectllte10k.ttf) format('truetype');
-    }
-    @font-face {
-    font-family: 'Lato';
-    font-style: italic;
-    font-weight: 300;
-    src: local('Lato Light Italic'), local('Lato-LightItalic'), url(https://fonts.gstatic.com/s/lato/v14/S6u_w4BMUTPHjxsI9w2_Gwfo.ttf) format('truetype');
-    }
-    @font-face {
-    font-family: 'Lato';
-    font-style: italic;
-    font-weight: 400;
-    src: local('Lato Italic'), local('Lato-Italic'), url(https://fonts.gstatic.com/s/lato/v14/S6u8w4BMUTPHjxsAXC-v.ttf) format('truetype');
-    }
-    @font-face {
-    font-family: 'Lato';
-    font-style: italic;
-    font-weight: 700;
-    src: local('Lato Bold Italic'), local('Lato-BoldItalic'), url(https://fonts.gstatic.com/s/lato/v14/S6u_w4BMUTPHjxsI5wq_Gwfo.ttf) format('truetype');
-    }
-    @font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 300;
-    src: local('Lato Light'), local('Lato-Light'), url(https://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh7USSwiPHA.ttf) format('truetype');
-    }
-    @font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Lato Regular'), local('Lato-Regular'), url(https://fonts.gstatic.com/s/lato/v14/S6uyw4BMUTPHjx4wWw.ttf) format('truetype');
-    }
-    @font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 700;
-    src: local('Lato Bold'), local('Lato-Bold'), url(https://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh6UVSwiPHA.ttf) format('truetype');
+    font-family: 'JoseFin sans', sans-serif;
+
+    h2 {
+        margin-bottom: 0.5rem;
     }
 
-    .bold {
-    font-weight: 700; }
+    .resume {
+        margin-top: 50px;
+    }
 
-    .light {
-    font-weight: 300; }
+    .resume__content {
+        display: flex;
+        flex-direction: row;
+        margin-top: 35px;
 
-    html {
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    background: #f8f8f8;
-    margin: 50px 0 100px;
-    letter-spacing: .3px;
-    color: #39424B; }
+        & > .left-column {
+            margin-right: 10px;
+        }
+    }
 
-    h1, h2, h3, h4, h5, h6 {
-    margin: 0; }
-
-    a {
-    color: inherit;
-    text-decoration: inherit; }
-    a:hover {
-        color: #2895F1; }
-    a .fa-external-link {
-        font-size: 10px;
-        vertical-align: text-top; }
-
-    p,
-    li {
-    font-size: 0.75rem; }
-
-    blockquote {
-    font-size: 0.75rem;
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 400;
-    font-style: italic;
-    margin: 10px 25px; }
-
-    em {
-    color: #999; }
-
-    ul {
-    margin: 10px 0 0;
-    -webkit-padding-start: 25px; }
-    ul li {
-        padding-left: 10px; }
-    ul.minimal {
-        list-style: none;
-        padding: 0; }
-        ul.minimal li {
-        margin-bottom: 3px;
-        padding-left: 0; }
-    ul.two-column {
-        -webkit-column-count: 2;
-        -webkit-column-gap: 28px;
-        column-count: 2;
-        column-gap: 28px; }
-        ul.two-column li {
-        padding-left: 0; }
-
-    @page {
-    size: A4; }
-
-    .container {
-    padding-top: 20px; }
-
-    .keyline {
-    width: 100px;
-    margin: 5px 0 10px;
-    border-top: 1px solid #3a6478; }
-
-    .pull-left {
-    float: left; }
-
-    .pull-right {
-    float: right; }
-
-    .clearfix:after {
-    content: "";
-    display: table;
-    clear: both; }
-
-    .profile-pic {
-    margin-top: -5px;
-    margin-right: 18px; }
-    .profile-pic img {
-        height: 52px;
-        width: 52px;
-        border-radius: 50%;
-        border: 2px solid #3a6478; }
-
-    .summary {
-    margin: 5px 0 5px; }
-
-    /* Layouts */
-    .page {
-    background: white;
-    width: 612px;
-    min-height: 792px;
-    display: block;
-    margin: 0 auto;
-    border-top: 10px solid #3a6478;
-    padding: 36px 22px 30px 34px;
-    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); }
-    .page:after {
-        content: "";
-        display: table;
-        clear: both; }
-
-    .left-column {
-    float: left;
-    width: 160px;
-    margin-right: 20px;
-    word-wrap: break-word; }
-
-    .right-column {
-    width: auto;
-    overflow: hidden; }
-
-    .item {
-    margin-bottom: 15px; }
-    .item:last-child {
-        margin-bottom: 0; }
-
-    @media print {
-    body {
-        margin: 0; }
-    .page {
-        width: 100%;
-        height: 100%;
+    .resume__header__name {
         margin: 0;
-        padding: 36px 0 30px;
-        box-shadow: none; }
-        .page .resume-header,
-        .page .resume-content {
-        padding: 0 22px 0 34px; }
-    .container {
-        page-break-inside: avoid; }
-    .work-container .item, .project-container .item {
-        page-break-inside: avoid; }
-    .fa-external-link {
-        display: none; } }
+        margin-bottom: 5px;
+    }
 
-    /* Components */
-    .contact-info {
-    max-width: 100%; }
+    .resume__header__label {
+        font-size: 1.3rem;
+        font-weight: 300;
+    }
 
-    .contact-info__icon {
-    margin-right: 5px;
-    width: 15px; }
+    section.about {
+        margin-bottom: 15px;
 
-    .contact-info__item {
-    font-size: 1rem;
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    line-height: 1.25;
-    margin-bottom: 5px; }
+        .about__info {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 0.25rem;
 
-    .contact-info__text {
-    max-width: 100%; }
+            & > svg {
+                width: 20px;
+                margin-right: 10px;
+            }
+        }
+    }
 
-    .education-container .location {
-    padding-bottom: 6px;
-    font-weight: 400; }
+    section.skills {
+        h2 {
+            margin-top: 1.5rem;
+        }
 
-    .education-container .specialization {
-    text-transform: none;
-    font-style: italic; }
+        .skills__item__header__title {
+            font-size: 1.15rem;
+            margin: 0px;
+            margin-bottom: 0.5rem;
+        }
 
-    .education__item {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px; }
+        .skills__item__keyword-list {
+            font-weight: 300;
+            font-size: 0.85rem;
+            margin-left: 0.5rem;
+            list-style: none !important;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
 
-    .education__item__location {
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 1rem;
-    margin-left: 15px; }
+        .skills__item__keyword-list__item {
+            margin-right: 0.25rem;
+            margin-bottom: 0.25rem;
 
-    .education__item__specialization {
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 0.75rem; }
+        }
+    }
 
-    .education__item__type-area {
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 1rem; }
+    section.languages {
+        h2 {
+            margin-top: 1.5rem;
+        }
 
-    .education__item__gpa {
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 1rem; }
+        .languages__list {
+            list-style: none;
+            margin-left: 10px;
+        }
 
-    .education__item__courses {
-    list-style: none; }
+        .languages__list__item {
+            margin: 0;
+            font-size: 0.85rem;
+        }
+    }
 
-    .info-tag-container {
-    margin-bottom: 5px; }
-    .info-tag-container .fa {
-        font-size: 0.875rem;
-        width: 12px;
-        margin-right: 5px;
-        text-align: center;
-        vertical-align: middle; }
-        .info-tag-container .fa.fa-map-marker {
-        font-size: 1rem; }
-        .info-tag-container .fa.fa-mobile {
-        font-size: 1.125rem; }
-        .info-tag-container .fa.fa-envelope-o {
-        font-size: 0.75rem; }
-        .info-tag-container .fa.fa-desktop {
-        font-size: 0.6875rem; }
-        .info-tag-container .fa.fa-external-link {
-        width: auto;
-        font-size: inherit;
-        vertical-align: text-top; }
-    .info-tag-container .info-text {
-        font-size: 0.5625rem;
-        display: inline-block;
-        vertical-align: middle;
-        width: 139px; }
+    section.interests {
 
-    .interests__item__keyword-list {
-    list-style: none;
-    padding: 0px;
-    padding-left: 5px;
-    margin-top: 5px; }
+        h2 {
+            margin-top: 1.5rem;
+        }
 
-    .interests__item__keyword-list__item {
-    padding: inherit;
-    font-size: 0.75rem; }
+        .interests__item {
+            margin-left: 0.5rem;
+        }
 
-    .job__company {
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 1rem; }
+        .interests__item__keyword-list {
+            list-style: none;
+            margin-top: 0;
+            margin-left: 10px;
+        }
 
-    .job__highlights__item {
-    margin-bottom: 5px; }
+        .interests__item__keyword-list__item {
+            margin: 0;
+            font-size: 0.85rem;
+        }
+    }
 
-    .languages__list {
-    list-style: none;
-    padding: 0; }
+    section.summary {
+        .summary__text {
+            font-family: 'JoseFin slab', serif;
+            font-size: 1rem;
+            line-height: 1.5rem;
+        }
+    }
 
-    .languages__list__item {
-    padding: inherit;
-    font-size: 0.75rem; }
+    section.work {
 
-    .project__keywords {
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 0.75rem;
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    padding-left: 5px;
-    margin: 0px; }
+        h2 {
+            &:after {
+                display: block;
+                width: 100%;
+                height: 2px;
+                background-color: #ddd;
+                content: "";
+                margin-bottom: 1.5rem;
+            }
+        }
 
-    .project__role {
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 1rem;
-    margin: 0; }
+        .work__job__header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 0;
 
-    .references-container .fa {
-    font-size: 0.875rem; }
+            .work__job__header__title {
+                margin-bottom: 0.75rem;
+                font-weight: 300;
+            }
 
-    .resume-title {
-    display: flex;
-    flex-direction: column;
-    text-transform: uppercase; }
+            .work__job__header__date {
+                font-weight: 300;
+                font-size: 1.25rem;
+                text-transform: uppercase;
+            }
+        }
 
-    .resume-title__name {
-    font-family: "Josefin Sans", Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    font-size: 2.5rem;
-    letter-spacing: 1px; }
+        .work__job__company {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: inherit;
+            text-decoration: none;
+        }
 
-    .resume-title__label {
-    font-family: "Josefin Sans", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 1.25rem;
-    letter-spacing: .5px; }
+        .work__job__summary {
+            margin-top: 0.5rem;
+            line-height: 1.5rem;
+            font-family: 'JoseFin slab', serif;
+        }
 
-    .section-header__title {
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    font-size: 1.25rem; }
+        .work__job__highlights {
+            font-family: 'JoseFin slab', serif;
+            font-size: 0.85rem;
+            list-style: none;
 
-    .section-header__date {
-    font-family: "Lato", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 1rem;
-    text-transform: uppercase; }
+            li {
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
 
-    .skill {
-    padding-top: 5px;
-    padding-bottom: 5px; }
+    section.projects {
 
-    .skill__title {
-    font-family: "Josefin Sans", Helvetica, Arial, sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 1px; }
+        h2 {
+            &:after {
+                display: block;
+                width: 100%;
+                height: 2px;
+                background-color: #ddd;
+                content: "";
+                margin-bottom: 1.5rem;
+            }
+        }
 
-    .skill__level {
-    font-family: "Josefin Sans", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 0.75rem;
-    letter-spacing: .5px;
-    text-transform: uppercase; }
+        .projects__item__header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 0;
 
-    .skill__list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap; }
+            .projects__item__header__title {
+                margin-bottom: 0.75rem;
+                font-weight: 400;
+                color: black;
+            }
 
-    .skill__list__item {
-    margin-right: 5px; }
+            .projects__item__header__date {
+                font-weight: 300;
+                font-size: 1.25rem;
+                text-transform: uppercase;
+            }
+        }
 
-    .title {
-    text-transform: uppercase;
-    line-height: 1;
-    margin: 0; }
+        .projects__item__keywords {
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
 
-    .title__text {
-    font-family: "Josefin Sans", Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 1.25rem;
-    line-height: inherit;
-    margin: inherit; 
+            li {
+                margin-left: 0.5rem;
+            }
+        }
+
+        .projects__item__summary {
+            font-family: 'JoseFin slab', serif;
+            line-height: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .projects__item__highlights {
+            font-family: 'JoseFin slab', serif;
+            font-size: 0.85rem;
+            list-style: none;
+
+            li {
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+
+    section.volunteering {
+
+        h2 {
+            &:after {
+                display: block;
+                width: 100%;
+                height: 2px;
+                background-color: #ddd;
+                content: "";
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .volunteering__item__header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 0;
+
+            .volunteering__item__header__title {
+                margin-bottom: 0.75rem;
+                font-weight: 400;
+                color: black;
+            }
+
+            .volunteering__item__header__date {
+                font-weight: 300;
+                font-size: 1.25rem;
+                text-transform: uppercase;
+            }
+        }
+
+        .volunteering__item__role {
+            font-weight: 300;
+            line-height: 1.5rem;
+        }
+
+        .volunteering__item__summary {
+            font-family: 'JoseFin slab', serif;
+            line-height: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .volunteering__item__highlights {
+            font-family: 'JoseFin slab', serif;
+            font-size: 0.85rem;
+            list-style: none;
+
+            li {
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+
+    section.education {
+
+        h2 {
+            &:after {
+                display: block;
+                width: 100%;
+                height: 2px;
+                background-color: #ddd;
+                content: "";
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .education__item {
+            margin-bottom: 1rem;
+        }
+
+        .education__item__header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .education__item__header__title {
+            margin-bottom: 0.05rem;
+            font-weight: 400;
+            font-size: 1.25rem;
+            color: black;
+
+        }
+
+        .education__item__specialization {
+            font-weight: 300;
+            margin-left: 0.5rem;
+        }
+
+        .education__item__header__date {
+            font-weight: 300;
+            font-size: 1.25rem;
+            text-transform: uppercase;
+        }
+
+        .education__item__details {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .education__item__courses {
+            margin: 0;
+        }
+    }
+
+    section.publications {
+        h2 {
+            &:after {
+                display: block;
+                width: 100%;
+                height: 2px;
+                background-color: #ddd;
+                content: "";
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .publications__item__header__title {
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+            font-size: 1.25rem;
+            color: black;
+        }
+
+        .publications__item__summary {
+            font-family: 'JoseFin slab', serif;
+        }
     }
 `;
+
+export default ResumePage;

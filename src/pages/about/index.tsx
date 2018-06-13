@@ -5,17 +5,28 @@ layout: about
 
 import * as React from 'react'
 
-class AboutPage extends React.Component {
+interface Props {
+    data: {
+        markdownRemark: MarkdownRemarkObject
+    }
+    children: any
+}
+
+class AboutPage extends React.Component<Props> {
 
     public render() {
-        console.log('Resume data:', this.props.data);
         return (
-            <div>
-                <h1>Tyler Collins</h1>
-            </div>
+            <div dangerouslySetInnerHTML={{__html: this.props.data.markdownRemark.html}} />
         );
     }
 }
 
 export default AboutPage;
 
+export const pageQuery = graphql`
+  query AboutQuery {
+    markdownRemark(frontmatter: { path: { eq: "about" }}) {
+        html
+      }
+  }
+`;

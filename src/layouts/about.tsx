@@ -41,7 +41,7 @@ const TemplateWrapper = ({ children, data }: Props) => (
     <Provider store={store}>
         <ThemeProvider theme={theme}>
             <div>
-                <HeaderBar theme={theme} data={data}/>
+                <HeaderBar theme={theme} data={data} path={window.location.pathname}/>
                 <FlexContainer>
                     <Main>
                         {children()}
@@ -83,6 +83,16 @@ export const pageQuery = graphql`
             linkedin
         }
       }
+    }
+    allMarkdownRemark {
+        edges {
+            node {
+                frontmatter {
+                    title
+                    path
+                }
+            }
+        }
     }
     file(name: {eq: "resume"}) {
         id

@@ -16,27 +16,24 @@ interface HeaderProps {
         site: {
             siteMetadata: SiteMetadata
         }
-    }
+    },
+    path: string
 }
 
 
 class HeaderBar extends React.Component<HeaderProps> {
 
     public render () {
-        const { data: { site: { siteMetadata }} } = this.props;
+        const { data: { site: { siteMetadata }}, path } = this.props;
         return (
             <Bar expanded={false}>
                 <Container>
-                    <div>
-                        <a href={siteMetadata.links.github}>
-                            <Icon className="fab fa-github" />
-                        </a>
-                        <a href={siteMetadata.links.linkedin}>
-                            <Icon className="fab fa-linkedin-in" />
-                        </a>
-                    </div>
+                    <div />
                     <LinkList>
-                        <li><Link to="/about/resume">Resume</Link></li>
+                        <li><Link to="/">codenotes</Link></li>
+                        { path !== '/about/resume' ?
+                        <li><Link to="/about/resume">Resume</Link></li> :
+                        <li><Link to="/about/">About</Link></li>}
                     </LinkList>
                 </Container>
             </Bar>
@@ -58,9 +55,11 @@ const LinkList = styled.ul`
     align-items: center;
 
     font-family: sans-serif;
+    font-weight: 600;
 
     li {
         margin 0;
+        margin-left: 0.5rem;
     }
 `;
 
@@ -80,7 +79,7 @@ const Container = styled.div`
 
     a {
         color: white;
-        text-decoration: none;
+        // text-decoration: none;
 
         ${customTransition(`color 0.5s`)}
 

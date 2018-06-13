@@ -53,7 +53,7 @@
             "category": "Node.js command line utility",
             "role": "Creator",
             "url": "https://npmjs.org/package/axe-crawler",
-            "start": "2017-10",
+            "startDate": "2017-10",
             "repo": "https://github.com/tjscollins/axe-crawler",
             "summary": "A web crawler for performing automated accessibility tests across all pages of a website and creating an html summary report of the results for publication or distribution",
             "highlights": [
@@ -67,7 +67,7 @@
             "category": "Single Page Web Application",
             "role": "Creator",
             "url": "http://trailmaster.herokuapp.com",
-            "start": "2016-11",
+            "startDate": "2016-11",
             "repo": "https://github.com/tjscollins/trailmaster",
             "summary": "A web application for collecting, storing, and using geoJSON data for running clubs to design and navigate new trail runs.",
             "highlights": [
@@ -191,7 +191,8 @@
     }],
     "publications": [{
         "name": "Code Notes Blog",
-        "website": "http://tjscollins.me/blog"
+        "website": "http://tjscollins.me/blog",
+        "summary": "A computer science blog explaining theoretical concepts and their applications to web development and software engineering."
     }],
     "interests": [{
             "name": "Reading",
