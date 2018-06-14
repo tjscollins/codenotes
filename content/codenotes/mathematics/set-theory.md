@@ -7,9 +7,6 @@ tags: ['set', 'union', 'intersection']
 ---
 
 
-<<<<<<< HEAD:content/mathematics/set-theory.md
-Test 1 2 3 $x^2$
-=======
 # Collections of Uniquities
 
 $x^2 - 2y^2 = z^3$
@@ -25,4 +22,3 @@ def example_code(a, b):
 
 example_code(1, 2);
 ```
->>>>>>> gatsby_site:content/codenotes/mathematics/set-theory.md
