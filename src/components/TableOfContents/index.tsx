@@ -39,9 +39,11 @@ class TOC extends React.Component<TocProps & ThemeProps<SiteTheme>, TocState> {
     constructor(props: TocProps & ThemeProps<SiteTheme>) {
         super(props);
         const { pages, theme } = props;
+        console.log(pages);
         this.state = {
             theme,
-            pages: pages.map((page) => ({ display: MATCH_TYPE.noSearchText, ...page })),
+            pages: pages.map((page) => ({ display: MATCH_TYPE.noSearchText, ...page }))
+                        .filter((page) => page.node.frontmatter.chapter),
             search: false
         };
 

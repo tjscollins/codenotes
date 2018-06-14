@@ -33,7 +33,8 @@ const fonts = {
     baseFontFamily: 'Arial, sans-serif',
     baseFontSize: '14px',
     baseFontWeight: '400',
-    boldFontWeight: '600'
+    boldFontWeight: '600',
+    pFontFamily: "'JoseFin slab', serif"
 };
 
 const article = {

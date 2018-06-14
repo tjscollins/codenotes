@@ -28,9 +28,10 @@ class HeaderBar extends React.Component<HeaderProps> {
         return (
             <Bar expanded={false}>
                 <Container>
-                    <div />
                     <LinkList>
-                        <li><Link to="/">codenotes</Link></li>
+                        <li><Link to="/">codenotes Blog</Link></li>
+                    </LinkList>
+                    <LinkList>
                         { path !== '/about/resume' ?
                         <li><Link to="/about/resume">Resume</Link></li> :
                         <li><Link to="/about/">About</Link></li>}
@@ -54,10 +55,15 @@ const LinkList = styled.ul`
     list-style: none;
     align-items: center;
 
-    font-family: sans-serif;
-    font-weight: 600;
+    font-family: 'Fira Code', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+
+    width: ${({theme}) => theme.sidebar.width.expanded}
+    text-align: center;
 
     li {
+        width: 100%;
         margin 0;
         margin-left: 0.5rem;
     }
@@ -79,7 +85,7 @@ const Container = styled.div`
 
     a {
         color: white;
-        // text-decoration: none;
+        text-decoration: none;
 
         ${customTransition(`color 0.5s`)}
 

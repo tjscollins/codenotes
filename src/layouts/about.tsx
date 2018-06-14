@@ -60,10 +60,23 @@ const FlexContainer = styled.div`
   flex-direction: row;
   max-width: 1600px;
   transition: padding-left ${({theme}) => theme.sidebar.hideTransition};
+  margin-top: 2rem;
 
   @media only screen and (max-width: ${({theme}) => theme.breakpoints.mobileLimit}) {
     display: block;
   }
+
+  img {
+      width: 45%;
+      float: right;
+      margin-left: 1rem;
+  }
+
+  p {
+      font-size: 1rem;
+      font-family: ${({theme}) => theme.fonts.pFontFamily};
+      line-height: 1.5rem;
+    }
 `;
 
 const Main = styled.main`
