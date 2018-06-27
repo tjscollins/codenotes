@@ -34,8 +34,8 @@ class CodenotesPost extends React.Component<CodenotesPostProps, CodenotesPostSta
         if (MathJax) {
             MathJax.Hub.Config({
                 tex2jax: {
-                    inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
-                    displayMath: [ ['$$', '$$'], ['\[', '\]'] ],
+                    inlineMath: [ ['$', '$'] ],
+                    displayMath: [ ['$$', '$$'] ],
                     processEscapes: true
                 }
             });
