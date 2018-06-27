@@ -80,6 +80,19 @@ const Main = styled.main`
   max-width: 960px;
   padding: 0px 1.1rem 1.45rem;
   padding-top: 0;
+
+  blockquote {
+      background-color: ${({theme}) => theme.colors.blockquoteColor} !important;
+      padding: 10px;
+
+      blockquote {
+          // Nested blockquote for quote attribution
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+          padding-bottom: 0px
+      }
+  }
 `
 
 export const pageQuery = graphql`
