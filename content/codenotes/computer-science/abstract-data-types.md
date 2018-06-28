@@ -52,7 +52,7 @@ This simple idea makes for an equally simple specification.  We expect a contain
 - $push(x)$ &mdash; places item $x$ into the container 
 - $pop()$ &mdash; removes an item from the container
 
-That's it.  So long as we can perform those two operations (even if they are named differently), we have a container.  The two main types of containers, *stacks* and *queues*, differ only in how they select which element will be removed by the pop operation.  A stack removes the last element that inserted (known as Last-In-First-Out or LIFO ordering), while a queue returns the first element inserted of those currently remaining in the data structure (known as First-In-First-Out or FIFO ordering).
+That's it.  So long as we can perform those two operations (even if they are named differently), we have a container.  The two main types of containers, *stacks* and *queues*, differ only in how they select which element will be removed by the pop operation.  A stack removes the last element that was inserted (known as Last-In-First-Out or LIFO ordering), while a queue returns the first element that was inserted of those currently remaining in the data structure (known as First-In-First-Out or FIFO ordering).
 
 #### Dictionaries
 
@@ -60,15 +60,19 @@ A dictionary is a more subtle ADT than a container, at least to me.  The basic i
 
 The specification of a dictionary is more complex than a container too:
 
-- $search(k)$ &mdash; search the dictionary for item $k$ and return that item
+- $search(k)$ &mdash; search the dictionary for item $k$ and return that item if it exists
 - $insert(k)$ &mdash; place item $k$ in the dictionary
 - $delete(k)$ &mdash; remove item $k$ from the dictionary
 
 While there are only three essential operations for the dictionary ADT, most implementations support a number of other operations, depending on their implementation.
 
+There are two common types of dictionaries: maps and sets.  A map is probably what you typically think of when you hear the term dictionary in programming.  Python's dictionary data type, for example, is a map. In general, a map is any data structure that associates a stored key with a stored value.  Javascript's object data type is a map.
+
+The second type of dictionary is a set which stores only keys and only one copy of each key.  In terms of its implementation you can think of a set as a map where the key and value are always equal, but that detail isn't relevant at the ADT level.  What is relevant is that a set supports the same operations as a map, namely search, insert, and delete.
+
 #### Priority Queues
 
-I'll admit, I found Skiena's mention of priority queues as a fundamental ADT confusing, given that queues are already a type of container.  But on reflection, it seems that the specification is substantially different, regardless of the name.  A priority queue is more like a schedule than a container.  In particular, it must support:
+I'll admit, I found Skiena's mention of priority queues as a fundamental ADT confusing, given that queues are already a type of container.  But on reflection, it can be seen that the specification is substantially different, regardless of the name.  A priority queue is more like a schedule than a container.  In particular, it must support:
 
 - $insert(x)$ &mdash; insert item $x$ into the queue
 - $current()$ &mdash; return the current item from the queue
@@ -78,22 +82,22 @@ Unlike a regular queue, the order of insertion is irrelevant.  Instead the order
 
 ## Practice
 
-Let's return to our simple NodeJS web crawler checking for broken links.  The cowboy code above will, in the strictest possible sense, work.  However, it has a number of very serious problems.  The most serious of course is that it will probably never finish crawling even if we assume that the scrapeLinks function filters out any links that lead out of the company site.  This depends on the links on your company's website, but for my company that while loop would never halt correctly because it would keep bouncing back and forth between the same pages which link to each other until it runs out of memory and crashes.  Even if the while loop does halt, this script has the potential to make an exponential number of http requests in a very short time span, which in the best case means your server will simply block and ignore the requests.
+Let's return to our simple NodeJS web crawler checking for broken links.  The cowboy code above will, in the narrowest possible sense, work.  However, it has a number of very serious problems.  The most serious of course is that it will probably never finish crawling even if we assume that the scrapeLinks function filters out any links that lead out of the company site.  This depends on the links on your company's website, but for my company that while loop would never halt correctly because it would keep bouncing back and forth between the same pages which link to each other until it runs out of memory and crashes.  Even if the while loop does halt, this script has the potential to make an exponential number of http requests in a very short time span, which in the best case means your server will simply block and ignore the requests.  In the worst case, the script will crash when it runs out of memory from handling too many requests, or it might even bring down your server, depending on a number of factors.  This last scenario is unlikely, but not impossible.
 
 So the question is, how can ADTs help us fix it?
 
 ### Tracking What We've Already Seen
 
-The first problem is that we need a data structure that can keep track of what we've already seen.  Thinking in terms of the operations we'll need:
+The first problem is that we need a data structure that can keep track of what we've already seen so that we don't keep checking pages we've seen before.  Thinking in terms of the operations we'll need:
 
 - We need to be able to *search* to see if a url is already in the data structure so we can skip it if we've already seen it.
 - We need to be able to *insert* new urls into the data structure so we'll know we've seen them before.
 
-Which ADT supports search and insert?  The dictionary.  We don't need the delete functionality, but that's okay.  It's the only one that has what we need.
+Which ADT supports search and insert?  The dictionary.  We don't need the delete functionality, but that's okay.  It's the only one that has the search functionality that we need.
 
 ### Storing What We'll Check Next
 
-We need to store the new urls in a second data structure that holds the urls we haven't checked yet.  The obvious choice here is a container because we only need push and pop.  Our cowboy coder implementation uses the pages array as a container, but makes the mistake of trying to check every value in the array at once instead of sequentially.  Since the array might have hundreds of urls in it, that would mean hundreds of nearly simultaneous http requests.  Probably not good.  So we'll want to replace that naive use of an array with either a stack or a queue.  For our purposes order doesn't matter, so I'll go with a stack because Javascript's array type implements the stack for us so long as we use it correctly.
+We need to store the new urls in a second data structure that holds the urls we haven't checked yet.  The obvious choice here is a container because we only need push and pop.  Our cowboy coder implementation uses the pages array as a container, but makes the mistake of trying to check every value in the array at once instead of sequentially.  Since the array might have hundreds of urls in it (e.g. if your site has a comprehensive navigation UI), that would mean hundreds of nearly simultaneous http requests.  Probably not good.  So we'll want to replace that naive use of an array with either a stack or a queue.  For our purposes order doesn't matter, so I'll go with a stack because Javascript's array type implements the stack for us so long as we use it correctly.
 
 ### Storing Our Results
 
@@ -104,8 +108,9 @@ We need to store our results in a way that *prioritizes* any responses with stat
 Now we're ready to properly implement our little crawler:
 
 ```javascript
+// Using the built-in array as a container ADT
 const pages = ["https://companywebsite.com"];
-// PriorityQueue class implemented with a max-heap, accepts a key function that defines how items will be prioritized
+// MaxPriorityQueue class implemented with a max-heap, accepts a key function that defines how items will be prioritized
 const results = new MaxPriorityQueue(({status}) => status);
 // Set class implements dictionary ADT 
 const pagesSeen = new Set(); 
@@ -131,9 +136,9 @@ while (results.current().status >= 400) {
 }
 ```
 
-The code's a little longer now, but it's guaranteed to finish (assuming a finite, reasonable number of pages on our site, and that the scrapeLinks function filters out external pages), and it only makes one request at a time instead of, potentially, thousands<sup id="a3">[[3]](#f3)</sup>.  It's still pretty simplistic, but it will do its job.  
+The code's a little longer now, but it's guaranteed to finish (assuming a finite, reasonable number of pages on our site, and that the scrapeLinks function filters out external pages), and it only makes one request at a time instead of, potentially, thousands<sup id="a3">[[3]](#f3)</sup>.  It's still pretty simplistic, but it will do its job.  There's definitely some optimizations and improvements we could make, but for our original purpose this is sufficient.
 
-In actual practice you'd probably not bother implementing a crawler from scratch, opting instead to use an off-the-shelf library such as scrapy.  On the other hand, for a task as simple as this, configuring scrapy would probably be more work.  Either way, you're sure to encounter problems like this where spending a little time thinking about the ADTs that your program needs will save you time and headaches debugging later.
+In actual practice you'd probably not bother implementing a crawler from scratch, opting instead to use an off-the-shelf library such as scrapy.  On the other hand, for a task as simple as this, configuring scrapy would probably be more work.  Either way, when you're working on a new project, at almost any scale, you're sure to encounter problems like this where spending a little time thinking about the ADTs that your program needs will save you time and headaches debugging later.
 
 ## Further Resources
 
