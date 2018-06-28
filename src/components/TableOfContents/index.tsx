@@ -7,10 +7,11 @@ const uuid = require('uuid/v4');
 import styled, { ThemeProps } from 'styled-components';
 import { connect } from 'react-redux';
 
-import ChapterContents, { StyledNote } from './ChapterContents';
+import ChapterContents, { ArticleLink } from './ChapterContents';
 import SearchField from './Search';
 import AboutAuthor from './AboutAuthor';
 
+import { media } from '../../styles/mixins';
 import { toggleSideBar } from '../../redux/actions';
 import { MATCH_TYPE } from '../../constants';
 import { sidebarWidth } from '../../util';
@@ -39,7 +40,7 @@ class TOC extends React.Component<TocProps & ThemeProps<SiteTheme>, TocState> {
     constructor(props: TocProps & ThemeProps<SiteTheme>) {
         super(props);
         const { pages, theme } = props;
-        console.log(pages);
+        // console.log(pages);
         this.state = {
             theme,
             pages: pages.map((page) => ({ display: MATCH_TYPE.noSearchText, ...page }))
@@ -150,14 +151,11 @@ class TOC extends React.Component<TocProps & ThemeProps<SiteTheme>, TocState> {
 
         return recent.map(({ node, display }) => {
             return (
-                <StyledNote
+                <ArticleLink
                     key={uuid()}
                     display={display}
-                >
-                    <Link to={node.fields.slug}>
-                        {node.frontmatter.title}
-                    </Link>
-                </StyledNote>
+                    node={node}
+                />
             );
         })
     }
@@ -184,6 +182,7 @@ const StyledToc = styled.div`
     flex-direction: column;
     justify-content: space-between;
     overflow-y: auto;
+    overflow-x: hidden;
 `;
 
 const TopicsHeader = styled.h2`
@@ -199,19 +198,27 @@ const TocDiv = styled.div`
     flex-direction: column;
     height: 100%;
     justify-content: space-between;
-    left: calc(${sidebarWidth} - 360px);
     padding: 35px 0px 0px;
     position: fixed;
     top: 0px;
     transition: left ${({theme}) => theme.sidebar.hideTransition};
-    width: 360px;
-    z-index: 10000;
-
+    z-index: 0;
+    
     a {
         color: inherit;
         text-decoration: inherit;
         &:hover, &:focus { transition: color 0.5s ease; }
     }
+    
+    // media.xs
+    width: 100vw;
+    left: ${({expanded}) => expanded ? '0px' : '-100%'}
+
+    ${media.sm`
+        width: 360px;
+        left: calc(${sidebarWidth} - 360px);
+    
+    `}
 `;
 
 const TocTitle = styled.h1`

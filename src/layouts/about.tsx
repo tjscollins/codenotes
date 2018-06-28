@@ -41,7 +41,7 @@ const TemplateWrapper = ({ children, data }: Props) => (
     <Provider store={store}>
         <ThemeProvider theme={theme}>
             <div>
-                <HeaderBar theme={theme} data={data} path={window.location.pathname}/>
+                <HeaderBar theme={theme} data={data} />
                 <FlexContainer>
                     <Main>
                         {children()}

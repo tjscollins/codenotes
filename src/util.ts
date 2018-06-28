@@ -5,6 +5,8 @@ interface Props {
             width: {
                 expanded: string
                 hidden: string
+                arrowExpanded: string
+                arrowHidden: string
             }
         }
     }
@@ -12,4 +14,8 @@ interface Props {
 
 export function sidebarWidth({expanded, theme}: Props): string {
     return expanded ? theme.sidebar.width.expanded : theme.sidebar.width.hidden;
+}
+
+export function arrowPos({ expanded, theme}: Props): string {
+    return expanded ? theme.sidebar.width.arrowExpanded : theme.sidebar.width.arrowHidden;
 }

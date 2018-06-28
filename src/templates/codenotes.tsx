@@ -52,7 +52,7 @@ class CodenotesPost extends React.Component<CodenotesPostProps, CodenotesPostSta
         const { data } = this.props;
         const { noMathJax } = this.state;
         const post = data.markdownRemark;
-        console.log(post);
+        // console.log(post);
         return (
           <Article>
             <h1>{post.frontmatter.title}</h1>

@@ -10,7 +10,7 @@ export const media = {
     styles: TemplateStringsArray,
     ...interpolations: SimpleInterpolation[]
   ) => css`
-    @media (min-width: ${getEmSize(576)}em) {
+    @media (min-width: 576px) {
       ${css(styles, ...interpolations)};
     }
   `,
@@ -18,7 +18,7 @@ export const media = {
     styles: TemplateStringsArray,
     ...interpolations: SimpleInterpolation[]
   ) => css`
-    @media (min-width: ${getEmSize(768)}em) {
+    @media (min-width: 768px) {
       ${css(styles, ...interpolations)};
     }
   `,
@@ -26,7 +26,7 @@ export const media = {
     styles: TemplateStringsArray,
     ...interpolations: SimpleInterpolation[]
   ) => css`
-    @media (min-width: ${getEmSize(992)}em) {
+    @media (min-width: 992px) {
       ${css(styles, ...interpolations)};
     }
   `,
@@ -34,7 +34,7 @@ export const media = {
     styles: TemplateStringsArray,
     ...interpolations: SimpleInterpolation[]
   ) => css`
-    @media (min-width: ${getEmSize(1200)}em) {
+    @media (min-width: 1200px) {
       ${css(styles, ...interpolations)};
     }
   `

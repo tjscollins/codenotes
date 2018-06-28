@@ -7,9 +7,10 @@ import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
 import DefaultResume from '@tjscollins/jsonresume-react-components';
+import resume from '@tjscollins/resume';
 
 class ResumePage extends React.Component {
-    private resumeData = require('../../../data/resume.json');
+    // private resumeData = require('../../../data/resume.json');
 
     public render() {
         return (
@@ -21,7 +22,7 @@ class ResumePage extends React.Component {
                         rel="stylesheet"
                     />
                 </Helmet>
-                <DefaultResume resumeData={this.resumeData} />
+                <DefaultResume resumeData={resume} />
             </Div>
         );
     }

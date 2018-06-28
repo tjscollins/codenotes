@@ -17,14 +17,27 @@ interface HeaderProps {
             siteMetadata: SiteMetadata
         }
     },
-    path: string
 }
 
+interface HeaderState {
+    path?: string
+}
 
-class HeaderBar extends React.Component<HeaderProps> {
+class HeaderBar extends React.Component<HeaderProps, HeaderState> {
+
+    constructor(props: HeaderProps) {
+        super(props);
+        this.state = {};
+        this.updatePath = this.updatePath.bind(this);
+    }
+
+    public componentDidMount() {
+        this.updatePath();
+    }
 
     public render () {
-        const { data: { site: { siteMetadata }}, path } = this.props;
+        const { data: { site: { siteMetadata }} } = this.props;
+        const { path } = this.state;
         return (
             <Bar expanded={false}>
                 <Container>
@@ -33,12 +46,21 @@ class HeaderBar extends React.Component<HeaderProps> {
                     </LinkList>
                     <LinkList>
                         { path !== '/about/resume' ?
-                        <li><Link to="/about/resume">Resume</Link></li> :
-                        <li><Link to="/about/">About</Link></li>}
+                        <li onClick={this.updatePath}>
+                            <Link to="/about/resume">Resume</Link>
+                        </li> :
+                        <li onClick={this.updatePath}>
+                            <Link to="/about/">About</Link>
+                        </li>}
                     </LinkList>
                 </Container>
             </Bar>
         );
+    }
+
+    private updatePath() {
+        const path = window.location.pathname;
+        this.setState({path});
     }
 }
 

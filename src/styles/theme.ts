@@ -17,17 +17,20 @@ const sidebar = {
         textColor: 'white',
         hilight: 'hsla(50, 75%, 65%, 1)',          // Light gold
         focusColor: 'hsla(50, 50%, 85%, 1)',
-        tocColor: '#272822',
+        tocColor: '#272822'
     },
     width: {
         expanded: '360px',
-        hidden: '10px'
+        arrowExpanded: '335px',
+        hidden: '10px',
+        arrowHidden: '0px'
     },
     hideTransition: '0.75s ease-in-out'
 };
 
 const breakpoints = {
-    mobileLimit: '1120px'
+    mobileLimit: '1120px',
+    sm: '576px',
 };
 
 const fonts = {

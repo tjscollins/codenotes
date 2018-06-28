@@ -42,11 +42,11 @@ const TemplateWrapper: React.SFC<TemplateProps> = ({ children, data }) => (
     <Provider store={store}>
         <ThemeProvider theme={theme}>
             <div>
-                <HeaderBar />
                 <ToContents
                     pages={data.allMarkdownRemark.edges}
                     title={data.site.siteMetadata.title}
                 />
+                <HeaderBar />
                 <FlexContainer>
                     <Main>
                         {children()}
@@ -67,11 +67,12 @@ const FlexContainer = connectToStore(styled.div`
   flex-direction: row;
   max-width: 1600px;
   padding-left: ${sidebarWidth};
-
+  
   transition: padding-left ${({theme}: ThemeProps<SiteTheme>) => theme.sidebar.hideTransition};
-
-  @media only screen and (max-width: ${({theme}: ThemeProps<SiteTheme>) => theme.breakpoints.mobileLimit}) {
-    display: block;
+  
+  @media only screen and (max-width: 576px) {
+        display: ${({expanded}) => expanded ? 'none' : 'block'};
+        margin-top: 50px;
   }
 `)
 

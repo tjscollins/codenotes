@@ -4,8 +4,10 @@ import * as React from 'react';
 import styled from 'styled-components';
 const uuid = require('uuid/v4');
 import Link from 'gatsby-link';
+import { connect } from 'react-redux';
 
 import { MATCH_TYPE } from '../../constants';
+import { toggleSideBar } from '../../redux/actions';
 
 interface ChapterContentsProps {
     title: string
@@ -73,14 +75,11 @@ class ChapterContents extends React.Component<ChapterContentsProps, ChapterConte
                 >
                     {contents.map(({ node, display }) => {
                         return (
-                            <StyledNote
+                            <ArticleLink
                                 key={uuid()}
-                                display={(display as number)}
-                            >
-                                <Link to={node.fields.slug}>
-                                    {node.frontmatter.title}
-                                </Link>
-                            </StyledNote>
+                                display={display}
+                                node={node}
+                            />
                         );
                     })}
                 </CollapsingList>
@@ -96,6 +95,26 @@ class ChapterContents extends React.Component<ChapterContentsProps, ChapterConte
 }
 
 export default ChapterContents;
+
+export const ArticleLink = connect()(({ dispatch, display, node }) => (
+    <StyledNote
+        display={(display as number)}
+        onClick={() => { 
+                if (window.innerWidth <= 576) {
+                    dispatch(toggleSideBar())
+                }
+            }
+        }
+    >
+        <Link
+            to={node.fields.slug}
+        >
+            {node.frontmatter.title}
+        </Link>
+    </StyledNote>
+));
+
+
 
 
 const NumArticles = styled.span`
