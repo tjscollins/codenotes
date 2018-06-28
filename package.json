@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "author": "Tyler Collins <tjscollins@gmail.com>",
   "dependencies": {
-    "@tjscollins/jsonresume-react-components": "0.0.47",
+    "@tjscollins/jsonresume-react-components": "^0.1.1",
+    "@tjscollins/resume": "^0.2.3",
     "address-format": "0.0.3",
     "fs-extra": "^6.0.1",
     "gatsby": "^1.9.256",
@@ -37,7 +38,8 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "scp -r public/ tjscollins.me:public_html"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.3",
