@@ -33,7 +33,7 @@ results.map((linkStatus) => {
 
 What could go wrong?
 
-There's a lot that could go wrong with this code, obviously, and most of it could have been prevented by spending a few minutes reflecting on abstract data types.
+There's a lot that could go wrong with this code, and most of it could have been prevented by spending a few minutes reflecting on abstract data types.
 
 ## Theory
 
@@ -64,9 +64,9 @@ The specification of a dictionary is more complex than a container too:
 - $insert(k)$ &mdash; place item $k$ in the dictionary
 - $delete(k)$ &mdash; remove item $k$ from the dictionary
 
-While there are only three essential operations for the dictionary ADT, most implementations support a number of other operations, depending on their implementation.
+While there are only three essential operations for the dictionary ADT, most implementations support a number of other operations as well.
 
-There are two common types of dictionaries: maps and sets.  A map is probably what you typically think of when you hear the term dictionary in programming.  Python's dictionary data type, for example, is a map. In general, a map is any data structure that associates a stored key with a stored value.  Javascript's object data type is a map.
+There are two common types of dictionaries: maps and sets.  A map is probably what you typically think of when you hear the term dictionary in programming.  Python's dictionary data type, for example, is a map. In general, a map is any data structure that associates a stored key with a stored value.  Javascript's object data type is a map (as is its Map data type).
 
 The second type of dictionary is a set which stores only keys and only one copy of each key.  In terms of its implementation you can think of a set as a map where the key and value are always equal, but that detail isn't relevant at the ADT level.  What is relevant is that a set supports the same operations as a map, namely search, insert, and delete.
 
@@ -82,7 +82,7 @@ Unlike a regular queue, the order of insertion is irrelevant.  Instead the order
 
 ## Practice
 
-Let's return to our simple NodeJS web crawler checking for broken links.  The cowboy code above will, in the narrowest possible sense, work.  However, it has a number of very serious problems.  The most serious of course is that it will probably never finish crawling even if we assume that the scrapeLinks function filters out any links that lead out of the company site.  This depends on the links on your company's website, but for my company that while loop would never halt correctly because it would keep bouncing back and forth between the same pages which link to each other until it runs out of memory and crashes.  Even if the while loop does halt, this script has the potential to make an exponential number of http requests in a very short time span, which in the best case means your server will simply block and ignore the requests.  In the worst case, the script will crash when it runs out of memory from handling too many requests, or it might even bring down your server, depending on a number of factors.  This last scenario is unlikely, but not impossible.
+Let's return to our simple NodeJS web crawler checking for broken links.  The cowboy code above will, in the narrowest possible sense, work.  However, it has a number of very serious problems.  The most serious of course is that it will probably never finish crawling even if we assume that the scrapeLinks function filters out any links that lead out of the company site.  This depends on the links on your company's website, but for my company that while loop would never halt correctly because it would keep bouncing back and forth between the same pages which link to each other until it runs out of memory and crashes.  Even if the while loop does halt, this script has the potential to make an exponential number of http requests in a very short time span, which in the best case means your server will simply block and ignore the requests.  In the worst case, the script will crash when it runs out of memory from trying to handle too many requests, or it might even bring down your server (especially in a testing environment where your server doesn't have a ton of resources), depending on a number of other factors.  This last scenario is unlikely, but not impossible.
 
 So the question is, how can ADTs help us fix it?
 
@@ -136,7 +136,7 @@ while (results.current().status >= 400) {
 }
 ```
 
-The code's a little longer now, but it's guaranteed to finish (assuming a finite, reasonable number of pages on our site, and that the scrapeLinks function filters out external pages), and it only makes one request at a time instead of, potentially, thousands<sup id="a3">[[3]](#f3)</sup>.  It's still pretty simplistic, but it will do its job.  There's definitely some optimizations and improvements we could make, but for our original purpose this is sufficient.
+The code's a little longer now, but it's guaranteed to finish (that's of course assuming a finite number of pages on our site, and that the scrapeLinks function filters out external pages), and it only makes one request at a time instead of, potentially, thousands<sup id="a3">[[3]](#f3)</sup>.  It's still pretty simplistic, but it will do its job.  There's definitely some optimizations and improvements we could make, but for our original purpose this is sufficient.
 
 In actual practice you'd probably not bother implementing a crawler from scratch, opting instead to use an off-the-shelf library such as scrapy.  On the other hand, for a task as simple as this, configuring scrapy would probably be more work.  Either way, when you're working on a new project, at almost any scale, you're sure to encounter problems like this where spending a little time thinking about the ADTs that your program needs will save you time and headaches debugging later.
 

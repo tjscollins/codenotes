@@ -39,7 +39,7 @@
     "develop": "gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "scp -r public/ tjscollins.me:public_html"
+    "deploy": "gatsby build && scp -r public/* codenotes.tech:public_html"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.3",
