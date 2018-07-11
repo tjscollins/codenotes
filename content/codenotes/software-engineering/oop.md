@@ -60,7 +60,41 @@ For example, making modifications to closely coupled components: any components 
 
 ## Practice
 
-![Class Diagram](/images/axe-crawler.svg)
+### Message Passing
+
+In most languages, Kay and Hewitt's idea of message passing takes the form of object method class.  Consider the following NodeJS example using the express library:
+
+```javascript
+const express = require('express');
+
+const app = express();
+
+const homePage = app.route('/');
+
+homePage.get((req, res) => {
+    res.send('Hello World!');
+});
+
+app.listen(80);
+```
+
+The first two lines do some setup work by importing the express library and using the `express` factory function to create and express application object.  Once we have that object however, this code is all object-oriented message passing:
+
+1. We create the `homePage` object by passing the message `route` to the `app` object with the argument `'/'`.  Of course, this is not how we would normally describe this code when talking about Javascript.  Normally we would say that we 'call the route method on the app object,' but the meaning is the same.  Method calls == message passing.
+2. We pass the `get` message to the `homePage` object with a callback function as the sole argument.  If you're unfamiliar with express, what this means is that when the `homePage` receives a `get` request, it should call that callback function.
+3. We pass the `listen` message to the `app` object with an integer argument representing the port number we want the app object to listen on.
+
+And with that, we have a functioning web server.  A major, complex interactive application is completely done.
+
+### Example: Class Diagram for Accessibility Testing
+
+Let's take a look at what this looks like in practice.  Below is a UML class diagram for a program similar to [axe-crawler](https://github.com/tjscollins/axe-crawler) which performs automated accessibility testing of a website by crawling through the website and testing each unique page it finds for common accessibility issues such as color contrast, alt text for images, semantic markup, etc.  The functioning of the application is fairly straight-forward: it builds a configuration object from a configuration file, it crawls the specified domain and tests each unique page for accessibility issues, and then generates either an HTML report or logs a report to the console depending on the configuration.
+
+![Class Diagram for Accessibility Tester](/images/axe-crawler.svg)
+
+The first thing to notice is the class at the top.  It employs the [Facade Pattern](https://sourcemaking.com/design_patterns/facade), providing the interface to use the functionality provided by all the other classes in the application.  In our biological analogy, this class is the whole organism.  It's a black box, to which we can send 3 possible messages.  This organism is composed (note the use of composition arrows in the diagram) of a number of organs (component classes).  Each of those is a black box in its own right, and each accepts its own set of valid messages (i.e. its API).
+
+Each of the primary component classes (Configuration, Crawler, TestRunner, TestResult, and *AbstractReporter* with its two concrete implementations HTMLReporter and ConsoleReporter) is analagous to an organ in the overall organism.  They each receive messages from the organism, and return data in response to those messages, but they are black-boxes to each other.
 
 ## Further Resources
 
@@ -69,8 +103,7 @@ There is a huge wealth of resources on object-oriented programming out there, bu
 * [*Code Complete* by Steve McConnell](https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670/)
     - I can't sing this book's praises often enough.  OOP is a practical methodology, not a theoretical one, and this is a practical book.
 * [*Object-Oriented Software Construction* by Bertrand Meyer](https://www.amazon.com/Object-Oriented-Software-Construction-Book-CD-ROM/dp/0136291554)
-    - A little dated, but probably the most thorough text that addresses the theory of object-oriented programming.
-
+    - A little dated, but probably the most thorough and complete text that addresses the theory of object-oriented programming.  The biggest downside is that all the code is written in Eiffel rather than a more mainstream language.
 
 ## Footnotes
 
