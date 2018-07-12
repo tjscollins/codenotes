@@ -62,39 +62,47 @@ For example, making modifications to closely coupled components: any components 
 
 ### Message Passing
 
-In most languages, Kay and Hewitt's idea of message passing takes the form of object method class.  Consider the following NodeJS example using the express library:
+In most modern languages, Kay and Hewitt's idea of message passing takes the form of object methods.  Consider the following NodeJS typescript example using the express library:
 
-```javascript
-const express = require('express');
+```typescript
+// Setup Code
+import * as express from 'express';
 
-const app = express();
+const app: express.Application = express();
 
-const homePage = app.route('/');
+// OOP Code
+const homePage: express.Router = app.route('/');
 
-homePage.get((req, res) => {
+homePage.get((req: express.Request, res: express.Response) => {
     res.send('Hello World!');
 });
 
 app.listen(80);
 ```
 
-The first two lines do some setup work by importing the express library and using the `express` factory function to create and express application object.  Once we have that object however, this code is all object-oriented message passing:
+The first two lines do some setup work by importing the express library and using the `express` factory function to create an express application object.  Once we have that object however, this code is all object-oriented message passing:
 
-1. We create the `homePage` object by passing the message `route` to the `app` object with the argument `'/'`.  Of course, this is not how we would normally describe this code when talking about Javascript.  Normally we would say that we 'call the route method on the app object,' but the meaning is the same.  Method calls == message passing.
-2. We pass the `get` message to the `homePage` object with a callback function as the sole argument.  If you're unfamiliar with express, what this means is that when the `homePage` receives a `get` request, it should call that callback function.
-3. We pass the `listen` message to the `app` object with an integer argument representing the port number we want the app object to listen on.
+1. We create the homePage object by passing the message route to the app object with the argument '/'.  Of course, this is not how we would typically describe this code.  Normally we would say that we 'call the route method on the app object,' but the meaning is the same.  Method calls == message passing.
+2. We pass the get message to the homePage object with a callback function as the sole argument.  If you're unfamiliar with express, what this means is that when the homePage receives a get request, it should call that callback function.
+3. We pass the listen message to the app object with an integer argument representing the port number we want the app object to listen on.
 
-And with that, we have a functioning web server.  A major, complex interactive application is completely done.
+And with that, we have a functioning web server.  A major, complex, interactive application is completely done.  Granted this is absurdly simple *for a web server*, but a web server is an inherently complex application from the start &mdash; all of the 'under the hood' functionality hidden behind those method calls relies on some serious engineering work.  And we just finished our webserver in six lines of very simple code using the message passing paradigm.
+
+When done well, this is the promise of object-oriented programming: we can use complex components as black boxes and compose them together to build staggeringly sophisticated systems in a way that is simple to create and maintain.
+
+Of course, when done poorly, the result is something else entirely.
 
 ### Example: Class Diagram for Accessibility Testing
 
-Let's take a look at what this looks like in practice.  Below is a UML class diagram for a program similar to [axe-crawler](https://github.com/tjscollins/axe-crawler) which performs automated accessibility testing of a website by crawling through the website and testing each unique page it finds for common accessibility issues such as color contrast, alt text for images, semantic markup, etc.  The functioning of the application is fairly straight-forward: it builds a configuration object from a configuration file, it crawls the specified domain and tests each unique page for accessibility issues, and then generates either an HTML report or logs a report to the console depending on the configuration.
+Let's take a look at larger scale example than our six-line webserver.  Below is a UML class diagram for a program similar to [axe-crawler](https://github.com/tjscollins/axe-crawler) which performs automated accessibility testing of a website by crawling through the website and testing each unique page it finds for common accessibility issues such as color contrast, alt text for images, semantic markup, etc.  The functioning of the application is fairly straight-forward: it builds a configuration object from a configuration file, it crawls the specified domain and tests each unique page for accessibility issues, and then generates either an HTML report or logs a report to the console depending on the configuration.
 
 ![Class Diagram for Accessibility Tester](/images/axe-crawler.svg)
 
 The first thing to notice is the class at the top.  It employs the [Facade Pattern](https://sourcemaking.com/design_patterns/facade), providing the interface to use the functionality provided by all the other classes in the application.  In our biological analogy, this class is the whole organism.  It's a black box, to which we can send 3 possible messages.  This organism is composed (note the use of composition arrows in the diagram) of a number of organs (component classes).  Each of those is a black box in its own right, and each accepts its own set of valid messages (i.e. its API).
 
 Each of the primary component classes (Configuration, Crawler, TestRunner, TestResult, and *AbstractReporter* with its two concrete implementations HTMLReporter and ConsoleReporter) is analagous to an organ in the overall organism.  They each receive messages from the organism, and return data in response to those messages, but they are black-boxes to each other.
+
+You'll notice that there's very little inheritance in this class diagram.  There are two abstract classes, each with two classes that implement them, but that's it.  As a rule, I think inheritance is a Bad Idea(tm) (especially inheriting from concrete classes &mdash; implementing interfaces / inheriting from abstract classes is typically fine).  It's right up there with [null references &mdash; the billion dollar mistake](https://www.lucidchart.com/techblog/2015/08/31/the-worst-mistake-of-computer-science/) in my book.  There are a few good use cases for inheriting from concrete classes (as there are for null values), such as the [Template Pattern](https://sourcemaking.com/design_patterns/template_method), but most of the time I'm of the opinion that it causes more problems than it's worth.  Instead of inheritance, this class diagram relies heavily on composition.  Objects 'have' instances of other objects and use them to perform desired functionality.  Objects can pass objects back and form as method arguments or return values.  Each object is focused on as limited a responsibility as possible (remember that red blood cells do not double as brain cells).  You may recognize the [SOLID principles](/software-engineering/solid-principles) at work here.
 
 ## Further Resources
 
